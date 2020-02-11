@@ -31,6 +31,17 @@ li {
   font-size: 1rem;
   padding: 1.4rem 1rem;
   transition: background-color 0.3s linear;
+  position: relative;
+}
+
+li::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }
 
 li:hover {
@@ -38,27 +49,27 @@ li:hover {
   color: #fcfcfc;
 }
 
-li.item-1.active {
+li.item-1.active::after {
   background-color: #6f3b3b;
   border-color: #6f3b3b;
 }
 
-li.item-2.active {
+li.item-2.active::after {
   background-color: #0ca3ec;
   border-color: #0ca3ec;
 }
 
-li.item-3.active {
+li.item-3.active::after {
   background-color: #c7a602;
   border-color: #c7a602;
 }
 
-li.item-4.active {
+li.item-4.active::after {
   background-color: #4f52bb;
   border-color: #4f52bb;
 }
 
-li.item-5.active {
+li.item-5.active::after {
   background-color: #b30000;
   border-color: #b30000;
 }
