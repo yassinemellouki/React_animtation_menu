@@ -39,13 +39,17 @@ li:hover {
   color: #fcfcfc;
 }
 
+li.transition-none .bg-layer {
+  transition: none !important;
+}
+
 li .bg-layer {
   display: block;
   position: absolute;
   top: 0;
   height: 100%;
   width: 100%;
-  transition: all 0.4s cubic-bezier(0.46, 1, 0.44, 0.4);
+  transition: all 0.3s cubic-bezier(0.46, 1, 0.44, 0.4);
   z-index: 999;
 }
 

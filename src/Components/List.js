@@ -95,17 +95,28 @@ class List extends Component {
       orderd_animation_items.forEach((item, i) => {
         setTimeout(() => {
           item.classList.add("to-left");
+          if (i + 1 !== orderd_animation_items.length) {
+            setTimeout(() => {
+              item.classList.add("transition-none");
+              item.classList.remove("to-left");
+            }, 400);
+          }
         }, ms);
         ms += 350;
       });
     } else if (!isToLeft) {
       crossed_items = crossed_items.reverse();
       orderd_animation_items = [...crossed_items, clicked_item];
-      console.log(orderd_animation_items);
       let ms = 0;
       orderd_animation_items.forEach((item, i) => {
         setTimeout(() => {
           item.classList.add("to-right");
+          if (i + 1 !== orderd_animation_items.length) {
+            setTimeout(() => {
+              item.classList.add("transition-none");
+              item.classList.remove("to-right");
+            }, 400);
+          }
         }, ms);
         ms += 350;
       });
@@ -137,7 +148,8 @@ class List extends Component {
           "to-left",
           "to-right",
           "left-hidden",
-          "right-hidden"
+          "right-hidden",
+          "transition-none"
         );
         if (i === index - 1) {
           this.setState({ active_item: index });
