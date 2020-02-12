@@ -30,18 +30,8 @@ li {
   width: 5rem;
   font-size: 1rem;
   padding: 1.4rem 1rem;
-  transition: background-color 0.3s linear;
   position: relative;
-}
-
-li::after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
+  overflow: hidden;
 }
 
 li:hover {
@@ -49,27 +39,53 @@ li:hover {
   color: #fcfcfc;
 }
 
-li.item-1.active::after {
+li .bg-layer {
+  display: block;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  transition: all 0.4s cubic-bezier(0.46, 1, 0.44, 0.4);
+  z-index: 999;
+}
+
+.left-hidden .bg-layer {
+  left: -100% !important;
+}
+
+.right-hidden .bg-layer {
+  right: -100% !important;
+}
+
+li.active.to-left .bg-layer {
+  left: 0 !important;
+}
+
+li.active.to-right .bg-layer {
+  right: 0 !important;
+}
+
+li.item-1 .bg-layer {
   background-color: #6f3b3b;
   border-color: #6f3b3b;
 }
 
-li.item-2.active::after {
+li.item-2 .bg-layer {
   background-color: #0ca3ec;
   border-color: #0ca3ec;
 }
 
-li.item-3.active::after {
+li.item-3 .bg-layer {
   background-color: #c7a602;
   border-color: #c7a602;
 }
 
-li.item-4.active::after {
+li.item-4 .bg-layer {
   background-color: #4f52bb;
   border-color: #4f52bb;
 }
 
-li.item-5.active::after {
+li.item-5 .bg-layer {
   background-color: #b30000;
   border-color: #b30000;
 }
