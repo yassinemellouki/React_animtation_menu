@@ -18,12 +18,12 @@ class List extends Component {
   componentDidMount() {
     let items = this.state.items;
     items.forEach((item, i) => {
-      if (this.state.active_item < i + 1) {
+      if (this.state.active_item <= i + 1) {
         item.current.classList.add("left-hidden");
         if (i + 1 === this.state.active_item) {
           item.current.classList.add("active", "to-left");
         }
-      } else if (this.state.active_item > i + 1) {
+      } else if (this.state.active_item >= i + 1) {
         item.current.classList.add("right-hidden");
         if (i + 1 === this.state.active_item) {
           item.current.classList.add("active", "to-right");
@@ -46,22 +46,12 @@ class List extends Component {
         if (i + 1 === this.state.active_item) {
           item.current.classList.add("active");
           clicked_item = item.current;
-          /*
-          setTimeout(() => {
-            item.current.classList.add("to-right");
-          }, 400);
-	  */
         } else if (
           prev_active_index >= i + 1 &&
           this.state.active_item < i + 1
         ) {
           item.current.classList.add("active");
           crossed_items.push(item.current);
-          /*
-          setTimeout(() => {
-            item.current.classList.add("to-right");
-          }, 400);
-	  */
         }
       } else if (this.state.active_item > prev_active_index) {
         isToLeft = true;
@@ -69,74 +59,47 @@ class List extends Component {
         if (i + 1 === this.state.active_item) {
           item.current.classList.add("active");
           clicked_item = item.current;
-          /*
-          setTimeout(() => {
-            item.current.classList.add("to-left");
-          }, 400);
-	  */
         } else if (
           prev_active_index <= i + 1 &&
           this.state.active_item >= i + 1
         ) {
           item.current.classList.add("active");
           crossed_items.push(item.current);
-          /*
-          setTimeout(() => {
-            item.current.classList.add("to-left");
-          }, 400);
-	  */
         }
       }
     });
 
-    if (isToLeft) {
-      orderd_animation_items = [...crossed_items, clicked_item];
-      let ms = 0;
-      orderd_animation_items.forEach((item, i) => {
+    orderd_animation_items = [...crossed_items, clicked_item];
+
+    function animateItem(items, direction, speed) {
+      let steps = orderd_animation_items.length,
+        ms = 0,
+        item_transition_speed = speed / steps;
+
+      if (direction === "right") {
+        crossed_items = crossed_items.reverse();
+        items = [...crossed_items, clicked_item];
+      }
+      items.forEach((item, i) => {
+        item.style.transitionDuration = item_transition_speed + "px";
         setTimeout(() => {
-          item.classList.add("to-left");
-          if (i + 1 !== orderd_animation_items.length) {
+          item.classList.add("to-" + direction);
+          if (i + 1 !== items.length) {
             setTimeout(() => {
               item.classList.add("transition-none");
-              item.classList.remove("to-left");
-            }, 400);
+              item.classList.remove("to-" + direction, "active");
+            }, item_transition_speed);
           }
-        }, ms);
-        ms += 350;
-      });
-    } else if (!isToLeft) {
-      crossed_items = crossed_items.reverse();
-      orderd_animation_items = [...crossed_items, clicked_item];
-      let ms = 0;
-      orderd_animation_items.forEach((item, i) => {
-        setTimeout(() => {
-          item.classList.add("to-right");
-          if (i + 1 !== orderd_animation_items.length) {
-            setTimeout(() => {
-              item.classList.add("transition-none");
-              item.classList.remove("to-right");
-            }, 400);
-          }
-        }, ms);
-        ms += 350;
+        }, ms - ms / steps);
+        ms += item_transition_speed;
       });
     }
+    if (isToLeft) {
+      animateItem(orderd_animation_items, "left", 1400);
+    } else if (!isToLeft) {
+      animateItem(orderd_animation_items, "right", 1400);
+    }
   }
-
-  /*
-  componentDidUpdate(prevProps, prevState) {
-    let prev_active_index = prevState.active_item;
-    let items = this.state.items;
-    items.forEach((item, i) => {
-      if (prev_active_index < this.state.active_item) {
-        item.current.classList.add("to-left");
-        if (i + 1 === this.state.active_item) {
-          item.current.classList.add("active", "to-left");
-        }
-      }
-    });
-  }
-  */
 
   itemClick = value => {
     let index = value;
@@ -167,7 +130,9 @@ class List extends Component {
           onClick={() => this.itemClick(1)}
           ref={this.item_1}
         >
-          <div className="bg-layer"></div> line 1
+          <div className="bg-layer"></div>
+
+          <div className="content">line 1</div>
         </li>
         <li
           key="2"
@@ -175,7 +140,8 @@ class List extends Component {
           onClick={() => this.itemClick(2)}
           ref={this.item_2}
         >
-          <div className="bg-layer"></div> line 2
+          <div className="bg-layer"></div>
+          <div className="content">line 2</div>
         </li>
         <li
           key="3"
@@ -183,7 +149,8 @@ class List extends Component {
           onClick={() => this.itemClick(3)}
           ref={this.item_3}
         >
-          <div className="bg-layer"></div> line 3
+          <div className="bg-layer"></div>
+          <div className="content">line 3</div>
         </li>
         <li
           key="4"
@@ -191,7 +158,8 @@ class List extends Component {
           onClick={() => this.itemClick(4)}
           ref={this.item_4}
         >
-          <div className="bg-layer"></div>line 4
+          <div className="bg-layer"></div>
+          <div className="content">line 4</div>
         </li>
         <li
           key="5"
@@ -199,7 +167,8 @@ class List extends Component {
           onClick={() => this.itemClick(5)}
           ref={this.item_5}
         >
-          <div className="bg-layer"></div>line 5
+          <div className="bg-layer"></div>
+          <div className="content">line 5</div>
         </li>
       </ul>
     );
