@@ -32,6 +32,7 @@ li {
   padding: 1.4rem 1rem;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 li:hover {
